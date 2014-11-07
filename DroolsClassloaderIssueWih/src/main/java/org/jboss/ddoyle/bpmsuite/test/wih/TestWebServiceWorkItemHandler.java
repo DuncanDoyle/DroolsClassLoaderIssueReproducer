@@ -33,6 +33,8 @@ public class TestWebServiceWorkItemHandler implements WorkItemHandler {
     
     private KieSession ksession;
     private ClassLoader classLoader;
+    private boolean foundResource = false;
+    
     
     public TestWebServiceWorkItemHandler(KieSession ksession) {
         this.ksession = ksession;
@@ -49,23 +51,21 @@ public class TestWebServiceWorkItemHandler implements WorkItemHandler {
 
     public void executeWorkItem(WorkItem workItem, final WorkItemManager manager) {
     	
-    	boolean foundIt = false;
-    	
     	String resourceName = "cxf.xml";
     	
     	URL cxfResource = this.classLoader.getResource(resourceName);
     	
     	if (cxfResource != null) {
-    		foundIt = true;
+    		this.foundResource = true;
     		logger.warn("FOUND ITTTTT!!!!!");
     	}
     	URL cxfResourceSlash = this.classLoader.getResource("/" + resourceName);
     	if (cxfResourceSlash != null) {
-    		foundIt = true;
+    		this.foundResource = true;
     		logger.warn("FOUND ITTTTT!!!!!");
     	}
     	
-    	if (!foundIt) {
+    	if (!this.foundResource) {
     		logger.warn("No!!! We haven't found it.");
     	}
     	
@@ -73,9 +73,11 @@ public class TestWebServiceWorkItemHandler implements WorkItemHandler {
     	manager.completeWorkItem(workItem.getId(), results);
     }
     
-   
+    public boolean isFoundResource() {
+		return foundResource;
+	}
 
-    public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
+	public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
         // Do nothing, cannot be aborted
     }
     

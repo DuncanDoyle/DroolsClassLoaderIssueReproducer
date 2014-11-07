@@ -43,7 +43,7 @@
 			<version>${version.org.kie}</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -62,6 +62,12 @@
 			<version>1.0.13</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+			<version>4.11</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -71,6 +77,14 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<systemPropertyVariables>
+						<!-- <drools.ruleEngine>phreak</drools.ruleEngine> -->
+					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 		</plugins>
